@@ -10,6 +10,7 @@
 package org.thunderdog.challegram.backup;
 
 import android.app.Activity;
+import android.os.Build;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.InputType;
@@ -41,6 +42,10 @@ public final class ProxyBackupUi {
   private ProxyBackupUi() { }
 
   public static void startExport(@NonNull ViewController<?> controller) {
+    if (Build.VERSION.SDK_INT < 19) {
+      UI.showToast("Encrypted proxy backups require Android 4.4 or newer", Toast.LENGTH_LONG);
+      return;
+    }
     List<Settings.Proxy> proxies = Settings.instance().getAvailableProxies();
     if (proxies.isEmpty()) {
       UI.showToast("No proxy configurations to export", Toast.LENGTH_LONG);
@@ -91,6 +96,10 @@ public final class ProxyBackupUi {
   }
 
   public static void startImport(@NonNull ViewController<?> controller) {
+    if (Build.VERSION.SDK_INT < 19) {
+      UI.showToast("Encrypted proxy backups require Android 4.4 or newer", Toast.LENGTH_LONG);
+      return;
+    }
     BaseActivity context = controller.context();
     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
       .addCategory(Intent.CATEGORY_OPENABLE)

@@ -195,7 +195,7 @@ public final class ProxyBackup {
   private static byte[] deriveKey(char[] password, byte[] salt) throws GeneralSecurityException {
     PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_SIZE);
     try {
-      return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec).getEncoded();
+      return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1").generateSecret(spec).getEncoded();
     } finally {
       spec.clearPassword();
     }
